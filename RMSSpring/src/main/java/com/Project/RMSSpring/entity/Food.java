@@ -1,6 +1,7 @@
 package com.Project.RMSSpring.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,4 +28,7 @@ public class Food {
 
     @Column(length = 50, nullable = false)
     private boolean available;
+
+    private String image;
+
 }
