@@ -1,9 +1,11 @@
 package com.Project.RMSSpring.repository;
 
-import com.Project.RMSSpring.entity.Admin;
+
+import com.Project.RMSSpring.entity.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AdminRepository extends JpaRepository<Admin, Integer> {
+public interface TokenRepository extends JpaRepository<Token, Integer> {
+
 }

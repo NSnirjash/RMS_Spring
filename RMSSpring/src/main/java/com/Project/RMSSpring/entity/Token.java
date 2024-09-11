@@ -1,26 +1,29 @@
 package com.Project.RMSSpring.entity;
 
+
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "admin")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Admin {
+public class Token {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private Integer id;
 
-    @Column(nullable = false, length = 50)
-    private String name;
+    @Column(name = "token")
+    private String token;
 
-    @Column(nullable = false, length = 50)
-    private String email;
+    @Column(name = "is_logged_out")
+    private boolean loggedOut;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
