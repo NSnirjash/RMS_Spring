@@ -21,10 +21,10 @@ public class Tables {
     @Column(unique=true, nullable=false, length=50)
     private String tableNumber;
 
-    @Column(unique=true, nullable=false, length=50)
+    @Column(nullable=false, length=50)
     private int capacity;
 
-    @Column(unique=true, nullable=false, length=50)
+    @Column(nullable=false, length=50)
     private String status;
 
 }
