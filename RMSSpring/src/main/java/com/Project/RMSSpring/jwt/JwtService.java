@@ -1,15 +1,19 @@
 package com.Project.RMSSpring.jwt;
 
+import com.Project.RMSSpring.entity.User;
 import com.Project.RMSSpring.repository.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.security.PublicKey;
+import java.util.Date;
+import java.util.function.Function;
 
 @Service
 public class JwtService {
@@ -17,7 +21,7 @@ public class JwtService {
     @Autowired
     private TokenRepository tokenRepository;
 
-    private final String SECRERT_KEY = "WY4GyiH?WeA!OZu:onAj{ZetbP%>Qo:9{^03gMrRpzQ7[jeixqAj~f0TsPTiw2E";
+    private final String SECREAT_KEY = "d169552a202ace4ed9b31a326df08aemran3e197a10213030f7c4be596ba99b6";
 
     private Claims extractAllClaims(String token) {
         return Jwts

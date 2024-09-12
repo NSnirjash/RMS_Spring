@@ -27,11 +27,11 @@ public class User implements UserDetails {
     @Column( nullable = false,length=100)
     private String name;
 
-    @Column( nullable = false,length=100, unique=true)
+    @Column( nullable = false, length=100, unique=true)
     private String email;
 
     @Column( nullable = false, unique=true)
-    @Size(min = 5, max = 40)
+
     private String password;
 
     @Column( nullable = false, length=100)
