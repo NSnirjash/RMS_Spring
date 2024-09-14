@@ -42,6 +42,12 @@ public class User implements UserDetails {
 
     private String image;
 
+    @Column(nullable = false)
+    private boolean active;
+
+    @Column(nullable = false)
+    private boolean lock;
+
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
@@ -68,7 +74,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return lock;
     }
 
     @Override
@@ -78,7 +84,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return active;
     }
 
     @OneToMany(mappedBy = "user")
