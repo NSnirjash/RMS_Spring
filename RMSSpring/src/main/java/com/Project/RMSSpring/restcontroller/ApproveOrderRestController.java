@@ -29,8 +29,9 @@ public class ApproveOrderRestController {
 
     @PutMapping("/approve/{orderId}")
     public ResponseEntity<ApproveOrder> approveOrder(@PathVariable int orderId,
-                                                     @RequestParam Long adminId) {
-        ApproveOrder approvedOrder = approveOrderService.approveOrder(orderId, adminId);
+                                                     @RequestParam Long adminId,
+                                                     @RequestParam long staffId) {
+        ApproveOrder approvedOrder = approveOrderService.approveOrder(orderId, adminId, staffId);
         return ResponseEntity.ok(approvedOrder);
     }
 

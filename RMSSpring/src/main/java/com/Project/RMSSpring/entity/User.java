@@ -95,4 +95,12 @@ public class User implements UserDetails {
     @JsonIgnore
     @OneToMany(mappedBy = "bookedBy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<TableBooking> bookings;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "paidBy", cascade = CascadeType.ALL)
+    private List<Bill> billsAsUser;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "receivedBy", cascade = CascadeType.ALL)
+    private List<Bill> billsAsAdmin;
 }

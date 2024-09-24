@@ -37,7 +37,7 @@ public class SecurityConfig {
 
                                 req ->
                                         req.requestMatchers("/login", "/register", "api/hotel/", "api/room/","activate/**","/register/admin","/register/waiter",
-                                                        "/api/table/**", "/api/bookings/**","/api/approvals/**",
+                                                        "/api/table/**", "/api/bookings/**","/api/approvals/**","/api/bills/**",
                                                         "/api/orders/**","/api/food/**","/api/approveorders/**")
                                                 .permitAll()
                                                 .requestMatchers("api/hotel/save", "api/room/save")

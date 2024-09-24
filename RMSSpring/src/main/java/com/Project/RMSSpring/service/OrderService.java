@@ -42,8 +42,6 @@ public class OrderService {
         // Calculate total price (food price * quantity)
         double totalPrice = (order.getFood().getPrice() * order.getQuantity());
         order.setTotalPrice(totalPrice);
-        System.out.println(order.getFood().getPrice()+"@@@@@@@@@@@@");
-        System.out.println(order.getQuantity()+"$$$$$$$$$$");
         return orderRepository.save(order);
     }
 

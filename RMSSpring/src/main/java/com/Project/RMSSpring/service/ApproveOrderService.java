@@ -42,19 +42,50 @@ public class ApproveOrderService {
 //        return approveOrderRepository.save(approvedOrder);
 //    }
 
-    public ApproveOrder approveOrder(int orderId, Long adminId) {
+//    public ApproveOrder approveOrder(int orderId, Long adminId) {
+//        // Fetch the admin and order details
+//        User admin = userRepository.findById(adminId)
+//                .orElseThrow(() -> new RuntimeException("Admin not found"));
+//
+//        Order order = orderRepository.findById(orderId)
+//                .orElseThrow(() -> new RuntimeException("Order not found"));
+//
+//        // Create and set ApproveOrder details
+//        ApproveOrder approvedOrder = new ApproveOrder();
+//        approvedOrder.setAdmin(admin);  // Set Admin
+//        approvedOrder.setOrder(order);  // Set Order
+//        approvedOrder.setApprovalStatus("APPROVED");
+//
+//        // Save and return the approved order
+//        return approveOrderRepository.save(approvedOrder);
+//    }
+
+    public ApproveOrder approveOrder(int orderId, Long adminId, long staffId) {
         // Fetch the admin and order details
         User admin = userRepository.findById(adminId)
                 .orElseThrow(() -> new RuntimeException("Admin not found"));
 
+        User staff = userRepository.findById(staffId)
+                .orElseThrow(() -> new RuntimeException("Staff not found"));
+
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        if (!"PENDING".equals(order.getStatus())) {
+            throw new RuntimeException("Order is not in pending state");
+        }
+
+        // Update order status to APPROVED
+        order.setStatus("APPROVED");
+        orderRepository.save(order); // Save the order with updated status
 
         // Create and set ApproveOrder details
         ApproveOrder approvedOrder = new ApproveOrder();
         approvedOrder.setAdmin(admin);  // Set Admin
+        approvedOrder.setStaff(staff);
         approvedOrder.setOrder(order);  // Set Order
         approvedOrder.setApprovalStatus("APPROVED");
+        approvedOrder.setApproved(true);
 
         // Save and return the approved order
         return approveOrderRepository.save(approvedOrder);

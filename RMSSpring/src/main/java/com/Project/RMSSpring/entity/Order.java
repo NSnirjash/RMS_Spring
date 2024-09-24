@@ -1,5 +1,6 @@
 package com.Project.RMSSpring.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,4 +34,9 @@ public class Order {
 
     @Column(nullable = false)
     private double totalPrice; // Total price of the order (food price * quantity)
+
+    // A single bill for this order
+    @JsonManagedReference
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Bill bill;
 }
