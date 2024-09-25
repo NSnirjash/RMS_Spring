@@ -36,10 +36,11 @@ public class SecurityConfig {
                         .authorizeHttpRequests(
 
                                 req ->
-                                        req.requestMatchers("/login", "/register", "api/hotel/", "api/room/","activate/**","/register/admin","/register/waiter",
+                                        req.requestMatchers("/login", "/register", "activate/**","/register/admin","/register/waiter",
                                                         "/api/table/**", "/api/bookings/**","/api/approvals/**","/api/bills/**",
                                                         "/api/orders/**","/api/food/**","/api/approveorders/**")
                                                 .permitAll()
+                                                .requestMatchers("/images/**").permitAll()
                                                 .requestMatchers("api/hotel/save", "api/room/save")
                                                 .hasAuthority("ADMIN")
                                                 .requestMatchers("api/hotel/{id}", "api/room/{id}","api/hotel/all/**", "api/location/")

@@ -26,7 +26,7 @@ public class FoodRestController {
     @PostMapping("/save")
     public ResponseEntity<String> saveFood(
             @RequestPart("food") Food food,
-            @RequestParam(value = "image", required = true) MultipartFile imageFile) {
+            @RequestParam(value = "image", required = false) MultipartFile imageFile) {
         try {
             foodService.saveFood(food, imageFile);
             return new ResponseEntity<>("Food added successfully with image.", HttpStatus.OK);
