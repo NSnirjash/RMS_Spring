@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface TableBookingRepository extends JpaRepository<TableBooking, Long> {
     List<TableBooking> findByStatus(String status); // To find pending bookings
+    List<TableBooking> findByBookedById(Long userId);
 }

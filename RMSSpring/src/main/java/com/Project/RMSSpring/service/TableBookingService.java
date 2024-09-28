@@ -42,6 +42,11 @@ public class TableBookingService {
                 .orElseThrow(() -> new RuntimeException("Table booking not found: " + id));
     }
 
+    // Retrieve bookings by user ID
+    public List<TableBooking> getBookingsByUserId(Long userId) {
+        return tableBookingRepository.findByBookedById(userId);
+    }
+
     public TableBooking createBooking(TableBooking booking) {
 
         User user = userRepository.findById(booking.getBookedBy().getId()).orElseThrow(() -> new RuntimeException("User not found"));
@@ -77,6 +82,11 @@ public class TableBookingService {
         booking.setApprovedBy(admin);
         booking.setStatus("APPROVED");  // Update the status to APPROVED
 
+        // Update the related table's status
+        Tables table = booking.getTables();
+        table.setStatus("BOOKED");  // Update the table status (you can set a custom status as needed)
+        tableRepository.save(table);
+
         return tableBookingRepository.save(booking);  // Save the updated booking
     }
 
@@ -93,6 +103,11 @@ public class TableBookingService {
         User admin = userRepository.findById(adminId).orElseThrow(() -> new RuntimeException("Admin not found"));
         booking.setApprovedBy(admin);
         booking.setStatus("REJECTED");  // Update the status to REJECTED
+
+        // Update the related table's status
+        Tables table = booking.getTables();
+        table.setStatus("AVAILABLE");  // Mark the table as AVAILABLE again
+        tableRepository.save(table);  // Save the updated table
 
         return tableBookingRepository.save(booking);  // Save the updated booking
     }
@@ -111,6 +126,10 @@ public class TableBookingService {
         booking.setTables(table);
         booking.setStatus("UPDATED");
 
+        // Update the related table's status (if necessary)
+        table.setStatus("BOOKED");  // Update the table status as required
+        tableRepository.save(table);  // Save the updated table
+
         return tableBookingRepository.save(booking);
     }
 
@@ -118,6 +137,11 @@ public class TableBookingService {
     public void cancelBooking(Long bookingId) {
         TableBooking booking = tableBookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        // Update the related table's status
+        Tables table = booking.getTables();
+        table.setStatus("AVAILABLE");  // Set the table status back to AVAILABLE
+        tableRepository.save(table);  // Save the updated table
 
         // Remove the booking by deleting it
         tableBookingRepository.delete(booking);
