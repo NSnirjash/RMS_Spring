@@ -11,6 +11,7 @@ import com.Project.RMSSpring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -52,6 +53,7 @@ public class TableBookingService {
         User user = userRepository.findById(booking.getBookedBy().getId()).orElseThrow(() -> new RuntimeException("User not found"));
         Tables table = tableRepository.findById(booking.getTables().getId()).orElseThrow(() -> new RuntimeException("Table not found"));
 
+        booking.setBookingDate(LocalDateTime.now());
         booking.setBookedBy(user);  // Set the user who is booking
         booking.setTables(table);   // Set the table being booked
         booking.setStatus("PENDING");
@@ -80,6 +82,7 @@ public class TableBookingService {
         // Fetch admin and approve the booking
         User admin = userRepository.findById(adminId).orElseThrow(() -> new RuntimeException("Admin not found"));
         booking.setApprovedBy(admin);
+        booking.setApprovalDate(LocalDateTime.now());
         booking.setStatus("APPROVED");  // Update the status to APPROVED
 
         // Update the related table's status

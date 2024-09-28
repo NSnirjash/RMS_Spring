@@ -25,20 +25,20 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column( nullable = false,length=100)
+    @Column(nullable = false, length = 100)
     private String name;
 
-    @Column( nullable = false, length=100, unique=true)
+    @Column(nullable = false, length = 100, unique = true)
     private String email;
 
-    @Column( nullable = false, unique=true)
+    @Column(nullable = false, unique = true)
 
     private String password;
 
-    @Column( nullable = false, length=100)
+    @Column(nullable = false, length = 100)
     private String address;
 
-    @Column( nullable = false, unique=true, length=20)
+    @Column(nullable = false, unique = true, length = 20)
     private String phone;
 
     private String image;
@@ -52,7 +52,7 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

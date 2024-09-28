@@ -41,12 +41,12 @@ public class AuthService {
     private void revokeAllTokenByUser(User user) {
 
         List<Token> validTokens = tokenRepository.findAllTokensByUser(user.getId());
-        if(validTokens.isEmpty()) {
+        if (validTokens.isEmpty()) {
             return;
         }
 
         // Set all valid tokens for the user to logged out
-        validTokens.forEach(t-> {
+        validTokens.forEach(t -> {
             t.setLoggedOut(true);
         });
 
@@ -55,12 +55,11 @@ public class AuthService {
     }
 
 
-
     public AuthenticationResponse register(User user) {
 
         // Check if the user already exists
-        if(userRepository.findByEmail(user.getUsername()).isPresent()) {
-            return new AuthenticationResponse(null, "User already exists");
+        if (userRepository.findByEmail(user.getUsername()).isPresent()) {
+            return new AuthenticationResponse(null, "User already exists", null);
         }
 
         // Create a new user entity and save it to the database
@@ -84,14 +83,14 @@ public class AuthService {
         saveUserToken(jwt, user);
         sendActivationEmail(user);
 
-        return new AuthenticationResponse(jwt, "User registration was successful");
+        return new AuthenticationResponse(jwt, "User registration was successful", null);
     }
 
     public AuthenticationResponse registerAdmin(User user) {
 
         // Check if the user already exists
         if (userRepository.findByEmail(user.getUsername()).isPresent()) {
-            return new AuthenticationResponse(null, "User already exists");
+            return new AuthenticationResponse(null, "User already exists", null);
         }
 
         // Create a new user entity and save it to the database
@@ -110,14 +109,14 @@ public class AuthService {
         saveUserToken(jwt, user);
         sendActivationEmail(user);
 
-        return new AuthenticationResponse(jwt, "User registration was successful");
+        return new AuthenticationResponse(jwt, "User registration was successful", null);
     }
 
     public AuthenticationResponse registerWaiter(User user) {
 
         // Check if the user already exists
         if (userRepository.findByEmail(user.getUsername()).isPresent()) {
-            return new AuthenticationResponse(null, "User already exists");
+            return new AuthenticationResponse(null, "User already exists", null);
         }
 
         // Create a new user entity and save it to the database
@@ -136,7 +135,7 @@ public class AuthService {
         saveUserToken(jwt, user);
         sendActivationEmail(user);
 
-        return new AuthenticationResponse(jwt, "User registration was successful");
+        return new AuthenticationResponse(jwt, "User registration was successful", null);
     }
 
 
@@ -164,7 +163,11 @@ public class AuthService {
         saveUserToken(jwt, user);
 
 
-        return new AuthenticationResponse(jwt, "User login was successful");
+        AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+        authenticationResponse.setUser(user);
+        authenticationResponse.setToken(jwt);
+        authenticationResponse.setMessage("User login was successful");
+        return authenticationResponse;
     }
 
     private void sendActivationEmail(User user) {
