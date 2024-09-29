@@ -23,6 +23,8 @@ public class OrderService {
 
     @Autowired
     private FoodRepository foodRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public Order createOrder(Order order) {
         User user = UserRepository.findById(order.getUser().getId())
@@ -55,12 +57,56 @@ public class OrderService {
     }
 
     // Get order by ID
-    public Optional<Order> getOrderById(int id) {
+    public Optional<Order> getOrderById(Long id) {
         return orderRepository.findById(id);
     }
 
+    public Order approveOrder(Long orderId, Long adminId, Long staffId) {
+        // Fetch the admin and order details
+        User admin = userRepository.findById(adminId)
+                .orElseThrow(() -> new RuntimeException("Admin not found"));
+
+        User staff = userRepository.findById(staffId)
+                .orElseThrow(() -> new RuntimeException("Staff not found"));
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        if (!"PENDING".equals(order.getStatus())) {
+            throw new RuntimeException("Order is not in pending state");
+        }
+
+        order.setAdmin(admin);  // Set Admin
+        order.setStaff(staff);
+        order.setStatus("APPROVED");
+
+        return orderRepository.save(order);
+    }
+
+    public Order serveOrder(Long orderId) {
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        order.setStatus("SERVED");
+        return orderRepository.save(order);
+    }
+
+    public Order rejectOrder(Long orderId, Long adminId) {
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        User admin = userRepository.findById(adminId)
+                .orElseThrow(() -> new RuntimeException("Admin not found"));
+
+        order.setStatus("REJECTED");
+        order.setAdmin(admin);
+        return orderRepository.save(order);
+    }
+
     // Update order status (approve/reject by admin)
-    public Order updateOrderStatus(int id, String status) {
+    public Order updateOrderStatus(Long id, String status) {
         Optional<Order> order = orderRepository.findById(id);
         if (order.isPresent()) {
             Order existingOrder = order.get();
@@ -71,7 +117,7 @@ public class OrderService {
     }
 
     // Delete an order
-    public void deleteOrder(int id) {
+    public void deleteOrder(Long id) {
         orderRepository.deleteById(id);
     }
 }

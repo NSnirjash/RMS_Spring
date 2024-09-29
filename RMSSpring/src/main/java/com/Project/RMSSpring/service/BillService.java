@@ -24,7 +24,7 @@ public class BillService {
     private UserRepository userRepository;
 
     // Create a bill for an order
-    public Bill createBill(int orderId, Long userId) {
+    public Bill createBill(Long orderId, Long userId) {
         // Fetch the order and user details
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));

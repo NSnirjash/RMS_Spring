@@ -41,14 +41,14 @@ public class OrderRestController {
 
     // Get order by ID (Admin or Customer)
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable int id) {
+    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
         Optional<Order> order = orderService.getOrderById(id);
         return order.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Update order status (Admin)
     @PutMapping("/update/{id}")
-    public ResponseEntity<Order> updateOrderStatus(@PathVariable int id, @RequestParam String status) {
+    public ResponseEntity<Order> updateOrderStatus(@PathVariable Long id, @RequestParam String status) {
         Order updatedOrder = orderService.updateOrderStatus(id, status);
         if (updatedOrder != null) {
             return ResponseEntity.ok(updatedOrder);
@@ -56,9 +56,30 @@ public class OrderRestController {
         return ResponseEntity.notFound().build();
     }
 
+    @PutMapping("/approve/{id}")
+    public ResponseEntity<Void> approveOrder(@PathVariable Long id,
+                                             @RequestParam Long adminId,
+                                             @RequestParam Long staffId) {
+        orderService.approveOrder(id, adminId, staffId);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/serve/{id}")
+    public ResponseEntity<Void> serveOrder(@PathVariable Long id) {
+        orderService.serveOrder(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/reject/{id}")
+    public ResponseEntity<Void> rejectOrder(@PathVariable Long id,
+                                             @RequestParam Long adminId) {
+        orderService.rejectOrder(id, adminId);
+        return ResponseEntity.ok().build();
+    }
+
     // Delete an order (Admin)
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable int id) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
         return ResponseEntity.ok().build();
     }

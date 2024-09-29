@@ -30,10 +30,20 @@ public class Order {
     private int quantity; // Quantity of the food item
 
     @Column(nullable = false)
-    private String status; // Status of the order (PENDING, APPROVED, REJECTED, SERVED)
+    private String status; // Status of the order (PENDING, APPROVED, REJECTED,  )
 
     @Column(nullable = false)
     private double totalPrice; // Total price of the order (food price * quantity)
+
+    @ManyToOne
+    @JoinColumn(name = "admin_id", referencedColumnName = "id")
+    private User admin; // Admin who approves the order
+
+    @ManyToOne
+    @JoinColumn(name = "staff_id", referencedColumnName = "id")
+    private User staff; // Staff who serves the food
+
+    private String notes;
 
     // A single bill for this order
     @JsonManagedReference

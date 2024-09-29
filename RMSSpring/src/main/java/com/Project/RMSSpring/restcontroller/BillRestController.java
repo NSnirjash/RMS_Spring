@@ -16,7 +16,7 @@ public class BillRestController {
 
     // Create a new bill for an order
     @PostMapping("/create")
-    public ResponseEntity<Bill> createBill(@RequestParam int orderId,
+    public ResponseEntity<Bill> createBill(@RequestParam Long orderId,
                                            @RequestParam Long userId
                                            ) {
         Bill bill = billService.createBill(orderId, userId);
