@@ -36,9 +36,9 @@ public class SecurityConfig {
                         .authorizeHttpRequests(
 
                                 req ->
-                                        req.requestMatchers("/login", "/register", "activate/**","/register/admin","/register/waiter",
+                                        req.requestMatchers("/getAllWaiters/**","api/orders/approve/**","/api/orders/create","/login", "/register", "activate/**","/register/admin","/register/waiter",
                                                         "/api/table/**", "/api/bookings/**","/api/approvals/**","/api/bills/**",
-                                                        "/api/orders/**","/api/food/**","/api/approveorders/**")
+                                                        "/api/orders/**","/api/food/**","/api/approveorders/**","/images/**")
                                                 .permitAll()
                                                 .requestMatchers("/images/**").permitAll()
                                                 .requestMatchers("api/hotel/save", "api/room/save")

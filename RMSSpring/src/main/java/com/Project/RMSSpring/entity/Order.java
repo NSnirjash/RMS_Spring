@@ -23,7 +23,7 @@ public class Order {
     private User user; // The customer who places the order
 
     @ManyToOne
-    @JoinColumn(name = "foodId", nullable = false)
+    @JoinColumn(name = "foodId")
     private Food food; // The food item being ordered
 
     @Column(nullable = false)

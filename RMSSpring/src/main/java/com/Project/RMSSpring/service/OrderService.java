@@ -32,10 +32,13 @@ public class OrderService {
                         () -> new RuntimeException("User not found " + order.getUser().getId())
                 );
 
+
+
         Food food = foodRepository.findById(order.getFood().getId())
                 .orElseThrow(
                         () -> new RuntimeException("Food not found " + order.getUser().getId())
                 );
+
 
 //        Food food = order.getFood();
         order.setUser(user);
