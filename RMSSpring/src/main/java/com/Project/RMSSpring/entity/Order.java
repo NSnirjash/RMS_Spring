@@ -1,10 +1,13 @@
 package com.Project.RMSSpring.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "orderFood")
@@ -12,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Order {
+public class Order implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,4 +52,11 @@ public class Order {
     @JsonManagedReference
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Bill bill;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "orderDetails_id", nullable = false)
+    @JsonIgnore
+    private OrderDetails orderDetails;
+
 }

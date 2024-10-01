@@ -1,9 +1,13 @@
 package com.Project.RMSSpring.restcontroller;
 
 
+import com.Project.RMSSpring.dto.OrderRequest;
 import com.Project.RMSSpring.entity.Order;
+import com.Project.RMSSpring.entity.OrderDetails;
+import com.Project.RMSSpring.service.OrderDetailsService;
 import com.Project.RMSSpring.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,19 +15,43 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/api/order")
 @CrossOrigin("*")
 public class OrderRestController {
 
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private OrderDetailsService orderDetailsService;
+
     // Create a new order (Customer)
+//    @PostMapping("/create")
+//    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+//        Order createdOrder = orderService.createOrder(order);
+//        return ResponseEntity.ok(createdOrder);
+//    }
+
     @PostMapping("/create")
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        Order createdOrder = orderService.createOrder(order);
-        return ResponseEntity.ok(createdOrder);
+
+    public ResponseEntity<OrderDetails> saveOrderDetailsWithOrders(@RequestBody OrderRequest orderDetailsRequest) {
+        // Process the order details and orders
+        OrderDetails savedOrderDetails = orderService.saveOrderDetailsWithOrders(
+                orderDetailsRequest.getOrderDetails(),
+                orderDetailsRequest.getOrders()
+        );
+        return ResponseEntity.ok(savedOrderDetails); // Ensure this is a JSON response
     }
+
+    @GetMapping("/view")
+    public ResponseEntity<List<OrderDetails>> getAllOrderDetails() {
+        List<OrderDetails> orderDetailsList = orderService.getAllOrderDetails();
+        return new ResponseEntity<>(orderDetailsList, HttpStatus.OK);
+    }
+
+
+
+
 
     // Get all orders (Admin)
     @GetMapping("/all")

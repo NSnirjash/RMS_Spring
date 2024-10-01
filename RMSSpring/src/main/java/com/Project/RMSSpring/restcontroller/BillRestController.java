@@ -15,13 +15,13 @@ public class BillRestController {
     private BillService billService;
 
     // Create a new bill for an order
-    @PostMapping("/create")
-    public ResponseEntity<Bill> createBill(@RequestParam Long orderId,
-                                           @RequestParam Long userId
-                                           ) {
-        Bill bill = billService.createBill(orderId, userId);
-        return ResponseEntity.ok(bill);
-    }
+//    @PostMapping("/create")
+//    public ResponseEntity<Bill> createBill(@RequestParam Long orderId,
+//                                           @RequestParam Long userId
+//                                           ) {
+//      //  Bill bill = billService.createBill(orderId, userId);
+////        return ResponseEntity.ok(bill);
+//    }
 
     // User pays the bill
     @PutMapping("/pay/{billId}")

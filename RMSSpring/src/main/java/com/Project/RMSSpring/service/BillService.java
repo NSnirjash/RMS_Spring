@@ -24,25 +24,25 @@ public class BillService {
     private UserRepository userRepository;
 
     // Create a bill for an order
-    public Bill createBill(Long orderId, Long userId) {
-        // Fetch the order and user details
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // Create a new bill
-        Bill bill = new Bill();
-        bill.setOrder(order);
-        bill.setPaidBy(user);
-        bill.setBillDate(LocalDateTime.now());
-        bill.setTotalAmount(order.getFood().getPrice() * order.getQuantity());
-        bill.setStatus("UNPAID");
-//        bill.setPaymentMethod(paymentMethod); // Cash or Card
-
-        return billRepository.save(bill);
-    }
+//    public Bill createBill(Long orderId, Long userId) {
+//        // Fetch the order and user details
+//        Order order = orderRepository.findById(orderId)
+//                .orElseThrow(() -> new RuntimeException("Order not found"));
+//
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        // Create a new bill
+//        Bill bill = new Bill();
+//        bill.setOrder(order);
+//        bill.setPaidBy(user);
+//        bill.setBillDate(LocalDateTime.now());
+//        bill.setTotalAmount(order.getFood().getPrice() * order.getQuantity());
+//        bill.setStatus("UNPAID");
+////        bill.setPaymentMethod(paymentMethod); // Cash or Card
+//
+//        return billRepository.save(bill);
+//    }
 
     // Pay the bill (User pays the bill)
     public Bill payBill(Long billId) {
