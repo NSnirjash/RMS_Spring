@@ -44,7 +44,7 @@ public class User implements UserDetails, Serializable {
 
     private String image;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private boolean active;
 
 //    @Column(nullable = false)
