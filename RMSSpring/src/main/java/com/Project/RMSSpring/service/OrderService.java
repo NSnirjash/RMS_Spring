@@ -116,14 +116,16 @@ public class OrderService {
 
             // Set the order status
             order.setStatus("PENDING");
+            System.out.println(order+"1111111111111111111111111111111111111111111111111111111111111111");
 
             // Save the order
             orderRepository.save(order);
         }
 
+
         // After calculating the total for all orders, set the final price in OrderDetails
         savedOrderDetails.setFinalPrice(finalTotalPrice);
-
+        System.out.println("22222222222222222222222222222222222222222222222");
         // Save the updated OrderDetails with the total price
         return orderDetailsRepository.save(savedOrderDetails);
     }
@@ -240,6 +242,4 @@ public class OrderService {
     public List<OrderDetails> getAllOrderDetails() {
         return orderDetailsRepository.findAll();
     }
-
-
 }

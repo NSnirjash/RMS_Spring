@@ -32,8 +32,27 @@ public class OrderRestController {
 //        return ResponseEntity.ok(createdOrder);
 //    }
 
-    @PostMapping("/create")
 
+//    public ResponseEntity<OrderDetails> saveOrderDetailsWithOrders(
+//            @RequestBody OrderRequest request) {
+//        try {
+//            // Call the service to save OrderDetails along with the list of Orders
+//            OrderDetails savedOrderDetails = orderService.saveOrderDetailsWithOrders(
+//                    request.getOrderDetails(),
+//                    request.getOrders()
+//            );
+//            // Return a response with the saved entity and HTTP status 201 (Created)
+//            return new ResponseEntity<>(savedOrderDetails, HttpStatus.CREATED);
+//        } catch (IllegalArgumentException e) {
+//            // Return a bad request response for any validation exceptions
+//            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+//        } catch (Exception e) {
+//            // Return an internal server error for any other exceptions
+//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
+    @PostMapping("/create")
     public ResponseEntity<OrderDetails> saveOrderDetailsWithOrders(@RequestBody OrderRequest orderDetailsRequest) {
         // Process the order details and orders
         OrderDetails savedOrderDetails = orderService.saveOrderDetailsWithOrders(
@@ -47,6 +66,12 @@ public class OrderRestController {
     public ResponseEntity<List<OrderDetails>> getAllOrderDetails() {
         List<OrderDetails> orderDetailsList = orderService.getAllOrderDetails();
         return new ResponseEntity<>(orderDetailsList, HttpStatus.OK);
+    }
+
+    @GetMapping("/OrderDetails/{id}")
+    public ResponseEntity<OrderDetails> getOrderDetailsById(@PathVariable Long id) {
+        OrderDetails orderDetails = orderDetailsService.getOrderDetailsById(id);
+        return ResponseEntity.ok(orderDetails);
     }
 
 
