@@ -80,10 +80,23 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:8091"));  // Add allowed origins "https://8ccf-103-205-69-8.ngrok-free.app"
+//        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//        configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+//        configuration.setAllowCredentials(true);
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);  // Apply CORS settings to all endpoints
+//        return source;
+//    }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:8091","https://8ccf-103-205-69-8.ngrok-free.app"));  // Add allowed origins
+        configuration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:8091"));  // Add allowed origins
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
         configuration.setAllowCredentials(true);
@@ -92,5 +105,8 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);  // Apply CORS settings to all endpoints
         return source;
     }
+
+
+
 
 }
