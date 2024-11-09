@@ -51,7 +51,7 @@ public class SecurityConfig {
                                                 .requestMatchers("api/hotel/save", "api/room/save")
                                                 .hasAuthority("ADMIN")
                                                 .requestMatchers("api/hotel/{id}", "api/room/{id}","api/hotel/all/**", "api/location/")
-                                                .hasAnyAuthority("ADMIN", "HOTEL")
+                                                .hasAnyAuthority("ADMIN", "USER", "WAITER")
                                                 .requestMatchers("api/user/**")
                                                 .hasAuthority("USER")
 
