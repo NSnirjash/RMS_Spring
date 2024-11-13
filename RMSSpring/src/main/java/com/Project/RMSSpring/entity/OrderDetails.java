@@ -4,7 +4,7 @@ package com.Project.RMSSpring.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -12,7 +12,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "orderDetails")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDetails implements Serializable {
