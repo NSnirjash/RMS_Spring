@@ -149,4 +149,32 @@ public class TableBookingService {
         // Remove the booking by deleting it
         tableBookingRepository.delete(booking);
     }
+
+    public TableBooking freeTable(Long bookingId, Long adminId) {
+        // Fetch the booking by ID
+        TableBooking booking = tableBookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        // Check if the booking status is either APPROVED or BOOKED
+        if (!booking.getStatus().equalsIgnoreCase("APPROVED") && !booking.getTables().getStatus().equalsIgnoreCase("BOOKED")) {
+            throw new RuntimeException("Table is not in a BOOKED or APPROVED status.");
+        }
+
+        // Fetch the admin details
+        User admin = userRepository.findById(adminId)
+                .orElseThrow(() -> new RuntimeException("Admin not found"));
+
+        // Update the booking status to "FREED" and reset related table status
+        booking.setStatus("FREED");
+        booking.setApprovedBy(admin);  // Mark this action by the admin
+        booking.setApprovalDate(LocalDateTime.now()); // Record the action time
+
+        // Update the table status back to AVAILABLE
+        Tables table = booking.getTables();
+        table.setStatus("AVAILABLE");
+        tableRepository.save(table); // Save the updated table status
+
+        // Save and return the updated booking
+        return tableBookingRepository.save(booking);
+    }
 }

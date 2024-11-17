@@ -30,4 +30,12 @@ public class TableApprovalController {
         TableBooking rejectedBooking = tableBookingService.rejectBooking(bookingId, adminId);
         return ResponseEntity.ok(rejectedBooking);
     }
+
+    // Free a booked or approved table
+    @PutMapping("/free/{bookingId}")
+    public ResponseEntity<TableBooking> freeTable(@PathVariable Long bookingId,
+                                                  @RequestParam Long adminId) {
+        TableBooking freedBooking = tableBookingService.freeTable(bookingId, adminId);
+        return ResponseEntity.ok(freedBooking);
+    }
 }
