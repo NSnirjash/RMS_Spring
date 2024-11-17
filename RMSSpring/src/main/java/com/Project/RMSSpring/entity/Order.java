@@ -1,13 +1,12 @@
 package com.Project.RMSSpring.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.*;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "orderFood")
@@ -26,12 +25,8 @@ public class Order implements Serializable {
     @JoinColumn(name = "userId", nullable = false)
     private User user; // The customer who places the order
 
-    @ManyToOne
-    @JoinColumn(name = "foodId")
-    private Food food; // The food item being ordered
-
-    @Column(nullable = false)
-    private int quantity; // Quantity of the food item
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<OrderItem> orderItems;
 
     @Column(nullable = false)
     private String status; // Status of the order (PENDING, APPROVED, REJECTED,  )
@@ -49,15 +44,7 @@ public class Order implements Serializable {
 
     private String notes;
 
-    // A single bill for this order
-    @JsonManagedReference
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Bill bill;
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orderDetails_id", nullable = false)
-    @JsonIgnore
-    private OrderDetails orderDetails;
 
 }

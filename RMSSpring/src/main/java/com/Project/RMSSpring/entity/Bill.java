@@ -1,6 +1,7 @@
 package com.Project.RMSSpring.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.*;
@@ -42,8 +43,7 @@ public class Bill {
     @JoinColumn(name = "admin_id")
     private User receivedBy;
 
-    // Order Relationship (Bill is generated from an order)
-    @JsonBackReference
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;

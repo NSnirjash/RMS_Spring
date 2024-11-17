@@ -1,10 +1,8 @@
 package com.Project.RMSSpring.restcontroller;
 
 
-import com.Project.RMSSpring.dto.OrderRequest;
 import com.Project.RMSSpring.entity.Order;
-import com.Project.RMSSpring.entity.OrderDetails;
-import com.Project.RMSSpring.service.OrderDetailsService;
+import com.Project.RMSSpring.entity.OrderItem;
 import com.Project.RMSSpring.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,66 +20,16 @@ public class OrderRestController {
     @Autowired
     private OrderService orderService;
 
-    @Autowired
-    private OrderDetailsService orderDetailsService;
-
-    // Create a new order (Customer)
-//    @PostMapping("/create")
-//    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-//        Order createdOrder = orderService.createOrder(order);
-//        return ResponseEntity.ok(createdOrder);
-//    }
-
-
-//    public ResponseEntity<OrderDetails> saveOrderDetailsWithOrders(
-//            @RequestBody OrderRequest request) {
-//        try {
-//            // Call the service to save OrderDetails along with the list of Orders
-//            OrderDetails savedOrderDetails = orderService.saveOrderDetailsWithOrders(
-//                    request.getOrderDetails(),
-//                    request.getOrders()
-//            );
-//            // Return a response with the saved entity and HTTP status 201 (Created)
-//            return new ResponseEntity<>(savedOrderDetails, HttpStatus.CREATED);
-//        } catch (IllegalArgumentException e) {
-//            // Return a bad request response for any validation exceptions
-//            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-//        } catch (Exception e) {
-//            // Return an internal server error for any other exceptions
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
     @PostMapping("/create")
-    public ResponseEntity<OrderDetails> saveOrderDetailsWithOrders(@RequestBody OrderRequest orderDetailsRequest) {
-        // Process the order details and orders
-        OrderDetails savedOrderDetails = orderService.saveOrderDetailsWithOrders(
-                orderDetailsRequest.getOrderDetails(),
-                orderDetailsRequest.getOrders()
-        );
-        return ResponseEntity.ok(savedOrderDetails); // Ensure this is a JSON response
+    public ResponseEntity<Order> saveOrder(@RequestBody Order order) {
+        Order savedOrder = orderService.saveOrder(order);
+        return ResponseEntity.ok(savedOrder);
     }
-
-    @GetMapping("/view")
-    public ResponseEntity<List<OrderDetails>> getAllOrderDetails() {
-        List<OrderDetails> orderDetailsList = orderService.getAllOrderDetails();
-        return new ResponseEntity<>(orderDetailsList, HttpStatus.OK);
-    }
-
-    @GetMapping("/OrderDetails/{id}")
-    public ResponseEntity<OrderDetails> getOrderDetailsById(@PathVariable Long id) {
-        OrderDetails orderDetails = orderDetailsService.getOrderDetailsById(id);
-        return ResponseEntity.ok(orderDetails);
-    }
-
-
-
-
 
     // Get all orders (Admin)
     @GetMapping("/all")
-    public ResponseEntity<List<Order>> getAllOrders() {
-        List<Order> orders = orderService.getAllOrders();
+    public ResponseEntity<List<Order>> getAllOrders(@RequestParam long userId) {
+        List<Order> orders = orderService.getAllOrders(userId);
         return ResponseEntity.ok(orders);
     }
 
@@ -125,7 +73,7 @@ public class OrderRestController {
 
     @DeleteMapping("/reject/{id}")
     public ResponseEntity<Void> rejectOrder(@PathVariable Long id,
-                                             @RequestParam Long adminId) {
+                                            @RequestParam Long adminId) {
         orderService.rejectOrder(id, adminId);
         return ResponseEntity.ok().build();
     }
