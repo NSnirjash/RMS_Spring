@@ -15,26 +15,38 @@ public class BillRestController {
     private BillService billService;
 
     // Create a new bill for an order
-//    @PostMapping("/create")
-//    public ResponseEntity<Bill> createBill(@RequestParam Long orderId,
-//                                           @RequestParam Long userId
-//                                           ) {
-//      //  Bill bill = billService.createBill(orderId, userId);
-////        return ResponseEntity.ok(bill);
-//    }
+    @PostMapping("/create")
+    public ResponseEntity<Bill> createBill(@RequestParam Long orderId,
+                                           @RequestParam Long adminId
+                                           ) {
+        try {
+            Bill bill = billService.createBill(orderId, adminId);
+            return ResponseEntity.ok(bill);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 
     // User pays the bill
     @PutMapping("/pay/{billId}")
     public ResponseEntity<Bill> payBill(@PathVariable Long billId) {
-        Bill bill = billService.payBill(billId);
-        return ResponseEntity.ok(bill);
+        try {
+            Bill bill = billService.payBill(billId);
+            return ResponseEntity.ok(bill);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     // Admin confirms the bill
     @PutMapping("/confirm/{billId}")
     public ResponseEntity<Bill> confirmBill(@PathVariable Long billId,
                                             @RequestParam Long adminId) {
-        Bill bill = billService.confirmBill(billId, adminId);
-        return ResponseEntity.ok(bill);
+        try {
+            Bill bill = billService.confirmBill(billId, adminId);
+            return ResponseEntity.ok(bill);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 }

@@ -24,25 +24,29 @@ public class BillService {
     private UserRepository userRepository;
 
     // Create a bill for an order
-//    public Bill createBill(Long orderId, Long userId) {
-//        // Fetch the order and user details
-//        Order order = orderRepository.findById(orderId)
-//                .orElseThrow(() -> new RuntimeException("Order not found"));
-//
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//        // Create a new bill
-//        Bill bill = new Bill();
-//        bill.setOrder(order);
-//        bill.setPaidBy(user);
-//        bill.setBillDate(LocalDateTime.now());
-//        bill.setTotalAmount(order.getFood().getPrice() * order.getQuantity());
-//        bill.setStatus("UNPAID");
-////        bill.setPaymentMethod(paymentMethod); // Cash or Card
-//
-//        return billRepository.save(bill);
-//    }
+    public Bill createBill(Long orderId, Long adminId) {
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        if (!"APPROVED".equals(order.getStatus())) {
+            throw new RuntimeException("Only approved orders can have bills generated.");
+        }
+
+        User admin  = userRepository.findById(adminId)
+                .orElseThrow(() -> new RuntimeException("Admin not found"));
+
+        // Create a new bill
+        Bill bill = new Bill();
+        bill.setOrder(order);
+        bill.setTotalAmount(order.getTotalPrice());
+        bill.setBillDate(LocalDateTime.now());
+        bill.setStatus("UNPAID");
+        bill.setPaidBy(order.getUser());
+        bill.setReceivedBy(admin);
+
+        return billRepository.save(bill);
+    }
 
     // Pay the bill (User pays the bill)
     public Bill payBill(Long billId) {
@@ -50,7 +54,7 @@ public class BillService {
                 .orElseThrow(() -> new RuntimeException("Bill not found"));
 
         if (bill.getStatus().equals("UNPAID")) {
-            bill.setStatus("PAID");
+            bill.setStatus("GIVEN");
         }
 
         return billRepository.save(bill);
@@ -64,9 +68,9 @@ public class BillService {
         User admin = userRepository.findById(adminId)
                 .orElseThrow(() -> new RuntimeException("Admin not found"));
 
-        if (bill.getStatus().equals("PAID")) {
+        if (bill.getStatus().equals("GIVEN")) {
             bill.setReceivedBy(admin);
-            bill.setStatus("CONFIRMED");
+            bill.setStatus("PAID");
         }
 
         return billRepository.save(bill);
