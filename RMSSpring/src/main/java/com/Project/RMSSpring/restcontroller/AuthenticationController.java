@@ -58,4 +58,10 @@ public class AuthenticationController {
         List<User> waiters = userService.getAllWaiters();
         return ResponseEntity.ok(waiters);
     }
+
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
 }

@@ -22,6 +22,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findAllByRole(Role.WAITER).orElse(new ArrayList<>());
     }
 
+    public List<User> getAllUsers() {
+        return userRepository.findAllByRole(Role.USER).orElse(new ArrayList<>());
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
