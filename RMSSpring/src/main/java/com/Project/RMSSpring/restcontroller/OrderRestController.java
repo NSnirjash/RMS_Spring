@@ -2,10 +2,8 @@ package com.Project.RMSSpring.restcontroller;
 
 
 import com.Project.RMSSpring.entity.Order;
-import com.Project.RMSSpring.entity.OrderItem;
 import com.Project.RMSSpring.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

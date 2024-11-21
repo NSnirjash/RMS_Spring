@@ -1,7 +1,6 @@
 package com.Project.RMSSpring.service;
 
 
-import com.Project.RMSSpring.entity.Role;
 import com.Project.RMSSpring.entity.TableBooking;
 import com.Project.RMSSpring.entity.Tables;
 import com.Project.RMSSpring.entity.User;

@@ -1,6 +1,5 @@
 package com.Project.RMSSpring.entity;
 
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.*;
 import lombok.NoArgsConstructor;
