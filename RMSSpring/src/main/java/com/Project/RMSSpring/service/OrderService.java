@@ -76,6 +76,11 @@ public class OrderService {
         return orderRepository.findById(id);
     }
 
+    // Get order by ID
+    public Optional<Order> getOrderByBillId(Long billId) {
+        return orderRepository.findByBill_Id(billId);
+    }
+
     public Order approveOrder(Long orderId, Long adminId, Long staffId) {
         // Fetch the admin and order details
         User admin = userRepository.findById(adminId)

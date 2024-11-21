@@ -49,4 +49,10 @@ public class BillRestController {
             return ResponseEntity.badRequest().body(null);
         }
     }
+
+    @GetMapping("/{billId}")
+    public ResponseEntity<Bill> getBillById(@PathVariable Long billId) {
+        Bill bill = billService.getBillById(billId);
+        return ResponseEntity.ok(bill);
+    }
 }

@@ -75,4 +75,10 @@ public class BillService {
 
         return billRepository.save(bill);
     }
+
+    // Fetch a bill by its ID
+    public Bill getBillById(Long billId) {
+        return billRepository.findById(billId)
+                .orElseThrow(() -> new RuntimeException("Bill not found with ID: " + billId));
+    }
 }

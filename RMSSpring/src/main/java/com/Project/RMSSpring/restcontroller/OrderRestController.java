@@ -47,6 +47,13 @@ public class OrderRestController {
         return order.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    // Get order by Bill Id
+    @GetMapping("/getOrderByBillId")
+    public ResponseEntity<Order> getOrderByBillId(@RequestParam Long billId) {
+        Optional<Order> order = orderService.getOrderByBillId(billId);
+        return order.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     // Update order status (Admin)
     @PutMapping("/update/{id}")
     public ResponseEntity<Order> updateOrderStatus(@PathVariable Long id, @RequestParam String status) {
