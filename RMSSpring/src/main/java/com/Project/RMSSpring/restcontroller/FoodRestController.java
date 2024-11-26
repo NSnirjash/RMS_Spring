@@ -46,12 +46,12 @@ public class FoodRestController {
         return ResponseEntity.ok(foods);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     public void DeleteById(@PathVariable int id) {
         foodService.deleteFoodById(id);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     public void UpdateFood(@RequestBody Food food,@PathVariable int id) {
         foodService.updateFood(food, id);
     }
